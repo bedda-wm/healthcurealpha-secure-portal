@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<h1>Patient Records</h1>
+
+<h2>Add Record</h2>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <label>Patient Name</label>
+  {{ form.patient_name(size=40) }}
+  <label>Diagnosis</label>
+  {{ form.diagnosis(size=60) }}
+  <label>Notes</label>
+  {{ form.notes(rows=4, cols=60) }}
+  <button type="submit">Add</button>
+</form>
+
+<h2>All Records</h2>
+<table>
+  <tr>
+    <th>Patient</th>
+    <th>Diagnosis</th>
+    <th>Created By</th>
+    <th>Date</th>
+  </tr>
+  {% for r in records %}
+  <tr>
+    <td>{{ r.patient_name }}</td>
+    <td>{{ r.diagnosis }}</td>
+    <td>{{ r.created_by.username }}</td>
+    <td>{{ r.created_at }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

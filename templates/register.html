@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block content %}
+<h1>Create Account</h1>
+
+<form method="post">
+  {{ form.hidden_tag() }}
+
+  <label>Username</label>
+  {{ form.username(size=32) }}
+
+  <label>Password (minimum 8 characters)</label>
+  {{ form.password(size=32) }} {% if not admin_exists %}
+  <label>Role</label>
+  {{ form.role() }}
+  <p style="font-size: 0.9em; color: #555">
+    This is a one-time setup. The first registered user may be an administrator.
+  </p>
+  {% else %}
+  <p style="font-size: 0.9em; color: #555">
+    New accounts are created as <strong>staff</strong>. Administrative
+    privileges can only be granted by an existing administrator.
+  </p>
+  {% endif %}
+
+  <button type="submit">Register</button>
+</form>
+{% endblock %}

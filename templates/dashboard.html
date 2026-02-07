@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<h1>Dashboard</h1>
+<p>
+  Welcome, <b>{{ current_user.username }}</b> (role: {{ current_user.role }}).
+</p>
+<ul>
+  <li><a href="{{ url_for('patients') }}">Manage Patient Records</a></li>
+  {% if current_user.role == "admin" %}
+  <li><a href="{{ url_for('admin_users') }}">Admin: Manage Users</a></li>
+  {% endif %}
+</ul>
+{% endblock %}

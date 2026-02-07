@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<h1>Admin — Users</h1>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.username }}</td>
+    <td>{{ u.role }}</td>
+    <td>{{ "Active" if u.is_active else "Disabled" }}</td>
+    <td>
+      {% if u.id != current_user.id %}
+      <form method="post" action="{{ url_for('toggle_user', user_id=u.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button type="submit">
+          {{ "Disable" if u.is_active else "Enable" }}
+        </button>
+      </form>
+      <form
+        method="post"
+        action="{{ url_for('toggle_role', user_id=u.id) }}"
+        style="display: inline"
+      >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button type="submit">
+          {{ "Promote to Admin" if u.role != "admin" else "Demote to Staff" }}
+        </button>
+      </form>
+      {% else %} (You) {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
